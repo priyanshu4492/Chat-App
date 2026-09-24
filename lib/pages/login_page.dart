@@ -61,6 +61,7 @@ class LoginPage extends StatelessWidget {
 
           //email textfield
           MyTextfield(
+            focusNode: FocusNode(),
             hintText: "Email",
             obscureText: false,
             controller: _emailController,
@@ -68,6 +69,7 @@ class LoginPage extends StatelessWidget {
           const SizedBox(height: 10.0),
           //pw textfield
           MyTextfield(
+            focusNode: FocusNode(),
             hintText: "Password",
             obscureText: true,
             controller: _pwController,

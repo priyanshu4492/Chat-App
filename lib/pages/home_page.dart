@@ -15,9 +15,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.grey,
-      elevation: 0.9,
-       title: Text("HOME")),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.9,
+        centerTitle: true,
+        title: Text("HOME", style: TextStyle(color: Colors.grey.shade500,fontWeight: FontWeight.bold)),
+      ),
       drawer: MyDrawer(),
       body: _buildUserList(),
     );

@@ -30,7 +30,8 @@ class RegisterPage extends StatelessWidget {
     } else {
       showDialog(
         context: context,
-        builder: (context) =>const  AlertDialog(title: Text("incorrect password!")),
+        builder: (context) =>
+            const AlertDialog(title: Text("incorrect password!")),
       );
     }
   }
@@ -62,6 +63,7 @@ class RegisterPage extends StatelessWidget {
 
           //email textfield
           MyTextfield(
+            focusNode: FocusNode(),
             hintText: "Email",
             obscureText: false,
             controller: _emailController,
@@ -69,6 +71,7 @@ class RegisterPage extends StatelessWidget {
           const SizedBox(height: 10.0),
           //pw textfield
           MyTextfield(
+            focusNode: FocusNode(),
             hintText: "Password",
             obscureText: true,
             controller: _pwController,
@@ -77,6 +80,7 @@ class RegisterPage extends StatelessWidget {
 
           //confirm password textfield
           MyTextfield(
+            focusNode: FocusNode(),
             hintText: "Confirm Password",
             obscureText: true,
             controller: _confirmPwController,
