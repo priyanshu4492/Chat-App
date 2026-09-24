@@ -47,10 +47,10 @@ class ChatService {
 
     //create a new message
     Message newMessage = Message(
-      message: message,
+      senderID: currentUserID,
+      senderEmail: currentUserEmail,
       receiveID: receiverID,
-      senderEmail: currentUserID,
-      senderID: receiverID,
+      message: message,
       timestamp: timestamp,
     );
 
@@ -61,9 +61,9 @@ class ChatService {
 
     //add new message to database
     await _firestore
-        .collection("chat_room")
+        .collection("chat_rooms")
         .doc(chatRoomID)
-        .collection("message")
+        .collection("messages")
         .add(newMessage.toMap());
   }
 

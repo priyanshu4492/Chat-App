@@ -1,3 +1,4 @@
+import 'package:chatapp/components/chat_bubble.dart';
 import 'package:chatapp/components/my_textfield.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:chatapp/services/auth/chat/chat-services.dart';
@@ -31,7 +32,11 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(receiverEmail)),
+      appBar: AppBar(
+        backgroundColor: Colors.grey.shade500,
+        
+        title: Center(child: Text(receiverEmail)),
+      ),
 
       body: Column(
         children: [
@@ -74,25 +79,58 @@ class ChatPage extends StatelessWidget {
   //build message item
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return Text(data["message"]);
+
+    //is current user
+    bool isCurrentUser = data['senderID'] == _authService.getCurrentUser()!.uid;
+
+    //algin message to the right if the sender is the current user , otherwise left
+    var alignment = isCurrentUser
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+
+    return Container(
+      alignment: alignment,
+      child: Column(
+        crossAxisAlignment: isCurrentUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
+        children: [
+          ChatBubble(isCurrentUser: isCurrentUser, message: data["message"]),
+        ],
+      ),
+    );
   }
 
   //build message input
   Widget _buildUserInput() {
-    return Row(
-      children: [
-        //textfield should take up most of the space
-        Expanded(
-          child: MyTextfield(
-            hintText: "Type a message",
-            obscureText: false,
-            controller: _messageController,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50.0),
+      child: Row(
+        children: [
+          //textfield should take up most of the space
+          Expanded(
+            child: MyTextfield(
+              hintText: "Type a message",
+              obscureText: false,
+              controller: _messageController,
+            ),
           ),
-        ),
 
-        //send button
-        IconButton(onPressed: sendMessage, icon: Icon(Icons.arrow_upward)),
-      ],
+          //send button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
+            ),
+            margin: const EdgeInsets.only(right: 25),
+
+            child: IconButton(
+              onPressed: sendMessage,
+              icon: Icon(Icons.arrow_upward, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
